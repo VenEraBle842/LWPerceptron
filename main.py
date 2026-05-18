@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, roc_curve
 
 from perceptron import Perceptron
-from utils import plot_decision_boundary, generate_gaussian_clouds, generate_xor, custom_cv
+from utils import plot_decision_boundary, generate_gaussian_clouds, generate_xor, generate_circle, custom_cv
 
 def main():
     os.makedirs('results', exist_ok=True)
@@ -95,7 +95,7 @@ def main():
 
     print("=== ДОПОЛНИТЕЛЬНЫЕ ЗАДАНИЯ ===\n")
 
-    # 1. Gaussian Clouds и XOR Dataset
+    # 1. Gaussian Clouds и XOR & Circle Datasets
     print("[Доп 1.1] Обучение на Гауссовых облаках...")
     X_gauss, y_gauss = generate_gaussian_clouds(500, noise=0.05)
     p_gauss = Perceptron(n_features=2)
@@ -116,6 +116,18 @@ def main():
     plot_decision_boundary(X_xor, y_xor, p_xor, ax, f"Обучение на XOR (Acc: {accuracy_score(y_xor, p_xor.predict(X_xor)):.2f})")
     plt.savefig('results/xor_experiment.png')
     print("Сохранен график: results/xor_experiment.png\n")
+    plt.close()
+
+    print("[Доп 1.3] Обучение на данных в виде окружностей...")
+    X_circle, y_circle = generate_circle(n_samples=500, noise=0.05)
+    p_circle = Perceptron(n_features=2)
+    p_circle.fit(X_circle, y_circle, X_circle, y_circle, epochs=100, lr=0.1, batch_size=32)
+
+    fig, ax = plt.subplots(figsize=(6, 5))
+    acc_circle = accuracy_score(y_circle, p_circle.predict(X_circle))
+    plot_decision_boundary(X_circle, y_circle, p_circle, ax, f"Обучение на окружности (Acc: {acc_circle:.2f})")
+    plt.savefig('results/circle_experiment.png')
+    print("Сохранен график: results/circle_experiment.png\n")
     plt.close()
 
     # 2. Hinge Loss и L2

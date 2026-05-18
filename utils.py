@@ -62,6 +62,54 @@ def generate_xor(n_samples=500, noise=0.05):
     return X[indices], y[indices]
 
 
+def generate_circle(n_samples=500, noise=0.05):
+    """
+    Генерация нелинейно разделимых данных (концентрические окружности),
+    построенная на базе вашей функции generate_gaussian_clouds.
+    """
+    n_clouds = 10  # Количество пар облаков, из которых соберем кольца
+    samples_per_cloud = n_samples // n_clouds
+
+    inner_radius = 2.0
+    outer_radius = 5.0
+
+    # Равномерно распределяем углы по кругу
+    angles = np.linspace(0, 2 * np.pi, n_clouds, endpoint=False)
+
+    # Уменьшаем ковариацию, чтобы облака сливались в более тонкие кольца
+    cov = ((0.3, 0.0), (0.0, 0.3))
+
+    X_list, y_list = [], []
+
+    for angle in angles:
+        # Класс 0 лежит на внутреннем круге, Класс 1 — на внешнем
+        inner_center = (inner_radius * np.cos(angle), inner_radius * np.sin(angle))
+        outer_center = (outer_radius * np.cos(angle), outer_radius * np.sin(angle))
+
+        # Генерируем кусочек кольца
+        X_sub, y_sub = generate_gaussian_clouds(
+            n_samples=samples_per_cloud,
+            noise=0.0,  # Шум добавим в самом конце
+            centers=(inner_center, outer_center),
+            cov=cov
+        )
+        X_list.append(X_sub)
+        y_list.append(y_sub)
+
+    X = np.vstack(X_list)
+    y = np.hstack(y_list)
+
+    # Добавляем общий шум (аналогично XOR)
+    actual_samples = len(y)
+    if noise > 0:
+        flip_mask = np.random.rand(actual_samples) < noise
+        y = np.where(flip_mask, 1 - y, y)
+
+    # Перемешиваем данные
+    indices = np.random.permutation(actual_samples)
+    return X[indices], y[indices]
+
+
 def custom_cv(X, y, k_folds=5):
     """
     Кастомная реализация K-Fold кросс-валидации для подбора гиперпараметров.
