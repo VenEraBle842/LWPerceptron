@@ -85,3 +85,43 @@
 - `l2_regularization_effect.png` — влияние L2-регуляризации на штраф весов (их норму) и качество модели.
 - `metrics_and_errors.png` — визуализация конкретных точек, на которых модель ошиблась, а также ROC-кривая (и значение ROC-AUC).
 - `momentum_experiment.png` — график сходимости потерь при различных значениях параметра Momentum (демонстрация сглаживания и ускорения обучения).
+
+---
+
+<img width="1200" height="500" alt="basic_training" src="https://github.com/user-attachments/assets/298e0fb9-47bb-4ae9-80c0-ef48683c51df" />
+
+<img width="600" height="500" alt="gauss_experiment" src="https://github.com/user-attachments/assets/c996eada-a4fe-4a6d-9313-acb1dbb469e1" />
+
+<img width="800" height="400" alt="init_experiment" src="https://github.com/user-attachments/assets/87fbba7b-a8db-4d49-94a6-f9595c9e289b" />
+
+<img width="1200" height="400" alt="l2_regularization_effect" src="https://github.com/user-attachments/assets/b29208e2-142a-4a06-9572-e55091eb3273" />
+
+<img width="1200" height="400" alt="loss_comparison" src="https://github.com/user-attachments/assets/0d40a259-7f6b-4b62-9ed7-eeee1e183c5b" />
+
+<img width="1300" height="500" alt="metrics_and_errors" src="https://github.com/user-attachments/assets/4768e40d-dfc8-41f3-ba55-434c865fabb2" />
+
+<img width="800" height="500" alt="momentum_experiment" src="https://github.com/user-attachments/assets/96061a9b-823b-41fd-84d5-1686f9cbeffb" />
+
+<img width="600" height="500" alt="xor_experiment" src="https://github.com/user-attachments/assets/14269552-ec61-4b13-a0fe-36bbbdd3e7db" />
+
+<img width="600" height="500" alt="circle_experiment" src="https://github.com/user-attachments/assets/d9f493d3-96d3-4458-b191-37f6735651bb" />
+
+---
+
+### Таблица: Влияние гиперпараметров на финальную точность
+
+Результат логирования экспериментов (на основе файла `experiments_results.csv`). Значения округлены для удобства чтения:
+
+| Группа гиперпараметров (Type) | Значение (Value) | Accuracy на тесте | Финальный Val Loss |
+| :--- | :--- | :--- | :--- |
+| **Learning Rate (LR)** | 0.001 | 0.2267 | 0.8190 |
+| **Learning Rate (LR)** | 0.01 | 0.8867 | 0.3802 |
+| **Learning Rate (LR)** | 0.5 | 0.8867 | 0.3007 |
+| **Learning Rate (LR)** | 1.0 | 0.8867 | 0.3011 |
+| **Batch Size** | 1 | 0.8867 | 0.3112 |
+| **Batch Size** | 16 | 0.8867 | 0.3027 |
+| **Batch Size** | 64 | 0.8867 | 0.3238 |
+| **Batch Size** | 256 | 0.8867 | 0.3903 |
+| **Init** (Инициализация) | zeros | 0.8867 | 0.3098 |
+| **Init** (Инициализация) | small | 0.8867 | 0.3100 |
+| **Init** (Инициализация) | large | 0.8867 | 0.3128 |
